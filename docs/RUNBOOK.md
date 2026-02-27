@@ -26,6 +26,7 @@ Open two browser tabs on the client URL to validate multiplayer sync.
 npm run typecheck
 npm test
 npm run build
+npm run start
 ```
 
 ## Controls
