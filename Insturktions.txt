@@ -1,0 +1,150 @@
+You are Codex acting as an autonomous senior game engineer.
+
+GOAL
+Build a WEB-BASED 3D ONLINE RPG prototype focused on skill training + precision progression.
+Core archetypes: Archer, Mage, Swordsman, Assassin.
+Players train skills (accuracy, timing, crit/backstab, spell control) to improve precision and effectiveness.
+
+TECH STACK (pick and implement this unless blocked)
+- Client: TypeScript + Vite + Babylon.js (WebGL)
+- Server: Node.js + TypeScript + Colyseus (authoritative rooms/state sync over WebSockets)
+- Monorepo: pnpm workspaces (or npm workspaces if pnpm not available)
+- Shared types/schemas: shared package used by both client/server
+- Minimal persistence initially (JSON or SQLite), upgrade later.
+
+NON-NEGOTIABLE PRINCIPLES
+1) Always keep the game playable at the end of each phase (vertical slice mentality).
+2) Server-authoritative: all combat resolution + skill XP awarding happens on the server.
+3) Latency-friendly: client-side interpolation for remote players; local player can be predicted minimally.
+4) Clean code: TypeScript strict mode, clear folder structure, small modules.
+5) Do not over-plan. Start implementing Phase 0 + Phase 1 immediately.
+
+HOW TO WORK (PHASED DELIVERY)
+- Implement phases in order. After finishing a phase:
+  - Ensure it runs locally with simple commands.
+  - Write a short “How to run” section in /docs/RUNBOOK.md.
+  - Write acceptance checklist in /docs/PHASES.md and mark items done.
+  - Leave the repo in a working state.
+  - Then STOP and ask: “Proceed to next phase?”
+
+REPO STRUCTURE (create this)
+/apps
+  /client        (Babylon.js browser game)
+  /server        (Colyseus server)
+/packages
+  /shared        (types + Colyseus schema + shared constants)
+/docs
+  RUNBOOK.md
+  PHASES.md
+
+GAME DESIGN (MINIMUM)
+- Third-person camera
+- Movement: WASD + mouse look, sprint, jump (basic)
+- Training arena: simple flat world + targets/dummies + a practice range.
+- Skills (start simple): 
+  - ArcheryAccuracy (improves projectile spread/cone + aim stability)
+  - SwordPrecision (improves melee hit timing window or reduces stamina cost)
+  - Assassination (improves backstab window/bonus)
+  - MagicControl (improves cast stability/recoil/spread or reduces miscast chance)
+- XP rules: ONLY server awards XP based on successful hits/criteria.
+
+PHASE 0 — PROJECT BOOTSTRAP (deliver working dev setup)
+Acceptance:
+- pnpm install (or npm) works at repo root
+- pnpm dev runs client + server (concurrently) with clear output
+- Client connects to server and joins a room
+Deliver:
+- Monorepo scaffolding + basic CI-ish scripts (lint/typecheck)
+
+PHASE 1 — MULTIPLAYER VERTICAL SLICE (movement + sync + basic combat)
+Acceptance:
+- Two browser tabs can join the same room and see each other
+- Player movement replicated + smoothed (interpolation for remote avatars)
+- 3 basic attacks, server-authoritative:
+  1) Sword: short-range arc hit (cooldown)
+  2) Archer: projectile ray or physics projectile (hit test server-side)
+  3) Mage: simple spell bolt (projectile) or instant ray with cooldown
+- Training dummies exist; hits show feedback (floating number or console UI)
+- Skill XP increments on server for valid hits; client displays skill levels
+
+Implementation notes:
+- Use simple capsule/box colliders or raycasts (no heavy physics yet).
+- Keep models simple (primitives). Add real assets later.
+- Anti-cheat baseline: client sends “intent” (attack request), server validates cooldown/range/angle.
+
+PHASE 2 — PRECISION + TRAINING SYSTEM
+Acceptance:
+- Add “precision mechanics” per archetype:
+  - Archer: aim cone/spread reduces as ArcheryAccuracy rises
+  - Sword: timing window (perfect hit) increases damage; window grows with SwordPrecision
+  - Assassin: backstab detection (position/angle check) + bonus scales with Assassination
+  - Mage: cast stability (less recoil/spread) scales with MagicControl
+- Training drills:
+  - Archery range targets (score by accuracy)
+  - Sword timing dummy (perfect hits streak)
+  - Assassin behind-target drill
+  - Mage cast-control drill
+- UI panel shows current drill + skill gains
+
+PHASE 3 — CLASS KIT + ABILITIES + COOLDOWNS
+Acceptance:
+- Each archetype has 3 abilities (starter kit) with cooldown + stamina/mana resource
+- Server enforces resources + cooldowns
+- Basic status effects (slow, bleed, stun-lite) with durations server-side
+
+PHASE 4 — INVENTORY + LOOT (minimal)
+Acceptance:
+- Simple inventory UI
+- Loot drops from dummies or crates
+- Equip weapon changes stats on server
+
+PHASE 5 — ACCOUNTS + PERSISTENCE (lightweight)
+Acceptance:
+- Username login (no passwords yet, dev-only token)
+- Persist character skills + inventory to SQLite or JSON DB on server
+- Rejoin restores character
+
+PHASE 6 — WORLD LOOP
+Acceptance:
+- Small zone + NPC trainer
+- Quests: “hit X targets”, “perfect hits streak”, “backstab X times”
+- Rewards: XP + item
+
+PHASE 7 — DEPLOYMENT READY
+Acceptance:
+- Production build for client
+- Server deploy instructions (Dockerfile)
+- Basic rate limiting + sanity checks for messages
+
+QUALITY BAR
+- Add minimal tests where practical (server logic tests for cooldown/range/XP rules).
+- Keep docs updated. Keep it runnable at every phase.
+
+START NOW
+Implement Phase 0 and Phase 1 in this run. When Phase 1 passes acceptance, stop and ask to proceed.
+
+
+
+Use Firebase for login and storage etc:
+
+// Import the functions you need from the SDKs you need 
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCdYjh6WiHRtDineBnDt6Mg6RW7BBF4rRc",
+  authDomain: "pathbound-online.firebaseapp.com",
+  projectId: "pathbound-online",
+  storageBucket: "pathbound-online.firebasestorage.app",
+  messagingSenderId: "1097545048224",
+  appId: "1:1097545048224:web:6bb0022f5a638097cde9c5",
+  measurementId: "G-XK3B6FYMFG"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathbound Online Prototype</title>
+  </head>
+  <body>
+    <canvas id="renderCanvas"></canvas>
+    <aside id="hud">
+      <h1>Pathbound Online</h1>
+      <p id="connectionStatus">Connecting...</p>
+      <p id="classLabel">Class: -</p>
+      <section>
+        <h2>Skills</h2>
+        <div id="skills">Waiting for server state...</div>
+      </section>
+      <section>
+        <h2>Combat Feed</h2>
+        <ul id="combatLog"></ul>
+      </section>
+      <section>
+        <h2>Attack Cooldowns</h2>
+        <div id="attackStatus"></div>
+      </section>
+      <section id="controls">
+        <h2>Controls</h2>
+        <p>WASD move, Shift sprint, Space jump, Mouse look</p>
+        <p>1 Sword, 2 Archer, 3 Mage</p>
+      </section>
+    </aside>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

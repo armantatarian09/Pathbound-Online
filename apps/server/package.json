@@ -1,0 +1,28 @@
+{
+  "name": "@pathbound/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "npm run typecheck",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@colyseus/core": "^0.16.5",
+    "@colyseus/schema": "^3.0.69",
+    "@colyseus/ws-transport": "^0.16.5",
+    "@pathbound/shared": "0.1.0",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.23",
+    "@types/node": "^22.15.14",
+    "tsx": "^4.20.6",
+    "vitest": "^2.1.8"
+  }
+}

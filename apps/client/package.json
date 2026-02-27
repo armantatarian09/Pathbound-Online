@@ -1,0 +1,24 @@
+{
+  "name": "@pathbound/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "npm run typecheck"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^7.48.3",
+    "@pathbound/shared": "0.1.0",
+    "colyseus.js": "^0.16.17",
+    "firebase": "^11.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.14",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.2"
+  }
+}
