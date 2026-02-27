@@ -7,7 +7,8 @@ import { Server } from "@colyseus/core";
 import { WebSocketTransport } from "@colyseus/ws-transport";
 import { ArenaRoom } from "./rooms/ArenaRoom.js";
 
-const port = Number(process.env.PORT ?? 2567);
+const port = Number(process.env.PORT ?? process.env.APP_PORT ?? 3000);
+const host = process.env.HOST ?? "0.0.0.0";
 
 const app = express();
 app.use(express.json());
@@ -42,8 +43,8 @@ const gameServer = new Server({
 
 gameServer.define("arena", ArenaRoom);
 
-httpServer.listen(port, () => {
-  console.log(`[server] Pathbound Online listening at http://localhost:${port}`);
+httpServer.listen(port, host, () => {
+  console.log(`[server] Pathbound Online listening at http://${host}:${port}`);
   if (clientDist) {
     console.log(`[server] Serving client build from ${clientDist}`);
   }
