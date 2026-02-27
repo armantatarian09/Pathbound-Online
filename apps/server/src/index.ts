@@ -19,8 +19,10 @@ app.get("/health", (_req, res) => {
 
 const currentDir = path.dirname(fileURLToPath(import.meta.url));
 const distCandidates = [
+  path.resolve(process.cwd(), "dist"),
   path.resolve(process.cwd(), "apps/client/dist"),
   path.resolve(currentDir, "../../client/dist"),
+  path.resolve(currentDir, "../../../dist"),
 ];
 const clientDist = distCandidates.find((candidate) => existsSync(candidate));
 
