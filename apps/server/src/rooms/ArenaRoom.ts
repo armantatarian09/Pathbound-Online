@@ -158,7 +158,8 @@ export class ArenaRoom extends Room<ArenaState> {
     }
     runtime.lastAttackIntentAt = now;
 
-    if (!isCooldownReady(runtime.lastAttacks[intent.type], now, attack.cooldownMs)) {
+    const lastUsedAt = runtime.lastAttacks[intent.type] ?? Number.NEGATIVE_INFINITY;
+    if (!isCooldownReady(lastUsedAt, now, attack.cooldownMs)) {
       return;
     }
 

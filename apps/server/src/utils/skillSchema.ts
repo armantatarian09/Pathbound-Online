@@ -12,6 +12,8 @@ export function getSkillValue(track: SkillTrackState, key: SkillKey): number {
     case "MagicControl":
       return track.MagicControl;
   }
+
+  return 0;
 }
 
 export function setSkillValue(track: SkillTrackState, key: SkillKey, value: number): void {
