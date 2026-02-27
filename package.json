@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "npm run build --workspace @pathbound/shared && concurrently -n server,client -c cyan,green \"npm:dev --workspace @pathbound/server\" \"npm:dev --workspace @pathbound/client\"",
     "build": "npm run build --workspace @pathbound/shared && npm run build --workspace @pathbound/server && npm run build --workspace @pathbound/client",
-    "start": "npm run start --workspace @pathbound/server",
+    "start": "node server.js",
     "typecheck": "npm run typecheck --workspace @pathbound/shared && npm run typecheck --workspace @pathbound/server && npm run typecheck --workspace @pathbound/client",
     "lint": "npm run lint --workspace @pathbound/shared && npm run lint --workspace @pathbound/server && npm run lint --workspace @pathbound/client",
     "test": "npm run test --workspace @pathbound/server"
