@@ -14,11 +14,11 @@
     "@babylonjs/core": "^7.48.3",
     "@pathbound/shared": "0.1.0",
     "colyseus.js": "^0.16.17",
-    "firebase": "^11.3.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.15.14",
+    "firebase": "^11.3.1",
     "typescript": "^5.7.3",
     "vite": "^6.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.14"
   }
 }
